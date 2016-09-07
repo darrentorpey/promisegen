@@ -4,23 +4,31 @@ function reduceByPercent(num, percent) {
 }
 
 function makeReductionGenerator(reducer) {
+    function reduce(num) {
+        var new_num_raw = reducer(num);
+
+        if (typeof(new_num_raw) !== 'number') {
+            console.error(new_num_raw);
+            throw Error('Reducer returned a non-number result');
+        }
+
+        return Math.round(new_num_raw);
+    }
+
     return function* reductionGenerator(num=100) {
-        var new_num = num;
+        yield num;
 
-        do {
-            yield new_num;
+        var my_new_num = reduce(num);
 
-            num = new_num;
+        while (my_new_num !== num) {
+            yield my_new_num;
 
-            let new_num_raw = reducer(num);
+            num = my_new_num;
 
-            if (typeof(new_num_raw) !== 'number') {
-                console.error(new_num_raw);
-                throw Error('Reducer returned a non-number result');
-            }
+            my_new_num = reduce(my_new_num);
+        }
 
-            new_num = Math.round(new_num_raw);
-        } while (num != new_num)
+        console.log('done');
     };
 }
 
