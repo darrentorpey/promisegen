@@ -1,3 +1,4 @@
+// http://localhost:9001/#/contacts/3
 (function() {
     'use strict';
     class Deferred {
@@ -6,12 +7,6 @@
                 this.resolve = resolve;
                 this.reject = reject;
             });
-        }
-        resolve(value) {
-            this.resolve(value);
-        }
-        reject(error) {
-            this.reject(error);
         }
     }
 

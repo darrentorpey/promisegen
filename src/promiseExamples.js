@@ -49,4 +49,6 @@ function getData() {
     });
 }
 
+mocks.getData = getData;
+
 getData();
